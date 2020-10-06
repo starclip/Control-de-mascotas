@@ -1,0 +1,24 @@
+{
+  "name": "Control-de-mascotas",
+  "version": "1.0.0",
+  "description": "Esta aplicación web permite llevar el registro de las mascotas (vacunas, tratamientos, desparacitaciones) y poder realizar citas a las mismas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starclip/Control-de-mascotas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/starclip/Control-de-mascotas/issues"
+  },
+  "homepage": "https://github.com/starclip/Control-de-mascotas#readme",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "package.json": "^2.0.1"
+  }
+}
