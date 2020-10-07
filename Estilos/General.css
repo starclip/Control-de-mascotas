@@ -1,0 +1,15 @@
+.tituloColumnas {
+    background-color: cyan;
+}
+
+#columnaTitulo h2 {
+    text-align: center;
+}
+
+.divisorLinea{
+    border-top: 4px solid rgba(1,0,0)
+}
+
+.imageCard{
+    height: 100px;
+}
