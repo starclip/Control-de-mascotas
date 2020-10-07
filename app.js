@@ -2,16 +2,21 @@ var express = require('express');
 var mysql = require('mysql');
 
 // Conexión a la base de datos.
-var app = express();
-
 const connection = mysql.createConnection({
-    host: 'localhost:8080',
+    host: 'localhost',
     user: 'admin',
     password: 'admin',
-    database: 'mascotas'
+    database: 'Mascotas'
 });
 
 connection.connect((err) => {
     if (err) throw err;
     console.log('Connected!');
 });
+
+var app = express();
+
+app.listen('3000', () => {
+    console.log('Estoy conectado');
+});
+
