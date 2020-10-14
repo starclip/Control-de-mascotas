@@ -19,7 +19,66 @@
             </div>
             <div id="botones" class="row">
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-success">Agregar</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCita">Agregar</button>
+                    <div class="modal fade" id="ModalAgregarCita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Agregar nueva cita</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                               
+                                <form>
+                                    <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label>Nombre de la mascota:</label>
+                                            <input type="text" class="form-control" placeholder="puppy">
+                                          </div>
+                                          <div class="col">
+                                            <label>Cédula:</label>
+                                            <input type="text" class="form-control" placeholder="115780875">
+                                          </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col">
+                                          <label>Nombre:</label>
+                                          <input type="text" class="form-control" placeholder="Jason">
+                                        </div>
+                                        <div class="col">
+                                            <label>Apellido:</label>
+                                          <input type="text" class="form-control" placeholder="Barrantes">
+                                        </div>
+                                      </div>
+            
+                                      <div class="row">
+                                        <div class="col">
+                                          <label>Seleccione la hora:</label>
+                                         <input type="time" id="default-picker" class="form-control" placeholder="Select time">
+                                        </div>
+                                        <div class="col input-with-post-icon datepicker">
+                                            
+                                            <label>Seleccione la fecha:</label>
+                                            <input placeholder="Seleccionar fecha" type="text" id="accessibility-example" class="form-control">
+                                            <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                                        </div>
+                                      </div>
+            
+            
+                                </form>
+                                <hr class="divisorLinea">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-success">Guardar cita</button>
+                            
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </div>
             </div>
             <hr class="divisorLinea">

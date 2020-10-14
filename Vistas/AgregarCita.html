@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+          <!-- Librerias de CSS -->
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          <link rel="stylesheet" href="../Estilos/General.css" />
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+          <title>Agregar nueva cita</title>
+    </head>
+    <body>
+        <!-- Va el contenido o el valor que vaya a tener las páginas. -->
+    <body>
+
+
+        <div class="container">
+            <div id="titulo" class="row">
+              <div id="columnaTitulo" class="col-md">
+                <h2>Crear nueva cita</h2>
+              </div>
+            </div>
+            <hr class="divisorLinea">
+            <div id="contenedorCitas" class="row">
+                <div id="columnaContenedoraCitas" class="col-md-12">
+                    <form>
+                        <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label>Nombre de la mascota:</label>
+                                <input type="text" class="form-control" placeholder="puppy">
+                              </div>
+                              <div class="col">
+                                <label>Cédula:</label>
+                                <input type="text" class="form-control" placeholder="115780875">
+                              </div>
+                            </div>
+                        <div class="row">
+                            <div class="col">
+                              <label>Nombre:</label>
+                              <input type="text" class="form-control" placeholder="Jason">
+                            </div>
+                            <div class="col">
+                                <label>Apellido:</label>
+                              <input type="text" class="form-control" placeholder="Barrantes">
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col">
+                              <label>Seleccione la hora:</label>
+                             <input type="time" id="default-picker" class="form-control" placeholder="Select time">
+                            </div>
+                            <div class="col input-with-post-icon datepicker">
+                                
+                                <label>Seleccione la fecha:</label>
+                                <input placeholder="Seleccionar fecha" type="text" id="accessibility-example" class="form-control">
+                                <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                            </div>
+                          </div>
+
+
+                    </form>
+                    <hr class="divisorLinea">
+                    <div id="botones" class="row">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success">Guardar cita</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript" src="../Scripts/AgregarCita.js"></script>
+    </body>
+</html>
