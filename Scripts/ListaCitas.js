@@ -74,7 +74,7 @@ function pintarCitas(listaCitas){
     for(var i = 0; i < listaCitas.length; i++){
         datosPintar = listaCitas[i];
 
-        debugger;
+        //debugger;
         var contenedor = $("<div>",{ 
             class: "row"
         });
@@ -93,7 +93,7 @@ function pintarCitas(listaCitas){
         });
 
         var colSm6 = $("<div>", {
-            class: "col-sm-10"
+            class: "col-sm-9"
         });
 
         var fechaObtenida = datosPintar.Fecha;
@@ -104,17 +104,23 @@ function pintarCitas(listaCitas){
             text: "Hora: " + hora
         });
 
+        var tituloResponsable = $("<strong>"); 
+        tituloResponsable.text("Responsable: ");
+
         var parrafo = $("<p>", {
             class: "card-text",
-            text: "Responsable: " + datosPintar.NombreCliente
         });
+        parrafo.append(tituloResponsable);
+        parrafo.append(datosPintar.NombreCliente)
 
-        var enlace = $("<a>", {
-            class: "btn btn-primary",
-            href:"#",
-            text: "Telefono: " + datosPintar.Telefono,
+        var tituloTelefono = $("<strong>"); 
+        tituloTelefono.text("Telefono: ");
 
+        var telefonoCard = $("<p>", {
+            class: "text-telefono"
         });
+        telefonoCard.append(tituloTelefono);
+        telefonoCard.append(datosPintar.Telefono);
 
         
         var imagen = $("<img>", {
@@ -125,7 +131,7 @@ function pintarCitas(listaCitas){
 
         colSm6.append(tituloh5);
         colSm6.append(parrafo);
-        colSm6.append(enlace);
+        colSm6.append(telefonoCard);
 
         rowCardBody.append(colSm6);
         rowCardBody.append(imagen);
