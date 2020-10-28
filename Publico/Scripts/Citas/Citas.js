@@ -1,4 +1,55 @@
 
+function definirEventos(){
+
+    // Evento que se ejecuta cuando se cargue el contenido del modal.
+    $('#ModalAgregarCita').on('show.bs.modal', function(e) {
+        var reference_tag = $(e.relatedTarget); 
+        var id = reference_tag.data('id');
+
+        // Decide si trae la información de la base de datos dependiendo de la acción realizada por el usuario.
+    });
+
+    $("#formularioCitas").on("submit", function(e){
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        debugger;
+        var datos = $(this).serialize();
+        var url = "/Citas/Guardar";
+
+        $.ajax({  
+            url: url,  
+            type:'POST', 
+            dataType: "json",
+            data: datos,
+            contentType: "application/x-www-form-urlencoded",
+            success: function(data, status){  
+                console.log('message', data.message);
+            },
+            error: function(xhr) {
+                try {
+                  var response = JSON.parse(xhr.responseText);
+                  console.log('Success');
+                  console.log(response);
+                }
+                catch (e) {
+                  var response = xhr.responseText;
+                  console.log(
+                    'There was an error: \n -> '
+                    + e + '\n'
+                    + 'Complete server response: \n -->'
+                    + response
+                  );
+                }
+              }
+        });  
+    });
+
+    // Evento que se ejecuta cuando la persona presiona guardar en el modal.
+    $("#Guardar").on('click', function(e) {
+        $("#formularioCitas").trigger("submit");
+    });
+}
+
 // Función que va a base de datos trae las citas del día de hoy y crea el html cargandolo en la página.
 function cargarCita(){
 
@@ -144,5 +195,6 @@ function pintarCitas(listaCitas){
 }
 
 $( document ).ready(function() {
+    definirEventos();
     cargarCita();
 });
