@@ -1,4 +1,4 @@
-
+// Función que define los eventos que van a suceder cuando un usuario presione un botón.
 function definirEventos(){
 
     // Evento que se ejecuta cuando se cargue el contenido del modal.
@@ -51,50 +51,21 @@ function definirEventos(){
 }
 
 // Función que va a base de datos trae las citas del día de hoy y crea el html cargandolo en la página.
-function cargarCita(){
-
-    var listaCitas = obtenerCitasBaseDatos();
-    pintarCitas(listaCitas);
-}
-
 function obtenerCitasBaseDatos(){
+
     // Obtiene las citas para bases de datos.
-    var listaCitas = [];
-    
-    listaCitas[0] = { 
-        "IdCita": 1, 
-        "IdMascota":5, 
-        "NombreMascota": "Riley", 
-        "Fecha": new Date(), 
-        "IdCliente": 6,
-        "NombreCliente": "Samantha",
-        "Telefono": "2214-0101",
-        "Foto": "riley.jpg"  
-    }
+    var url = "/Citas/ObtenerLista";
 
-    listaCitas[1] = { 
-        "IdCita": 2, 
-        "IdMascota":1, 
-        "NombreMascota": "Koneka", 
-        "Fecha": new Date(), 
-        "IdCliente": 6,
-        "NombreCliente": "Samantha",
-        "Telefono": "2214-0101",
-        "Foto": "koneka.jpg" 
-    }
-
-    listaCitas[2] = { 
-        "IdCita": 3, 
-        "IdMascota":6, 
-        "NombreMascota": "Sho", 
-        "Fecha": new Date(), 
-        "IdCliente": 7,
-        "NombreCliente": "Jason",
-        "Telefono": "2214-0909",
-        "Foto": undefined 
-    }
-
-    return listaCitas;
+    $.ajax({  
+        url: url,  
+        type:'GET', 
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status){ 
+            pintarCitas(data);
+        },
+        error: imprimirError
+    });  
 }
 
 // Obtener el formato de la fecha.
@@ -122,6 +93,7 @@ function obtenerFormatoFecha (fecha){
 function pintarCitas(listaCitas){
 
     var datosPintar;
+
     for(var i = 0; i < listaCitas.length; i++){
         datosPintar = listaCitas[i];
 
@@ -147,7 +119,7 @@ function pintarCitas(listaCitas){
             class: "col-sm-9"
         });
 
-        var fechaObtenida = datosPintar.Fecha;
+        var fechaObtenida = new Date(datosPintar.Fecha);
         var hora = obtenerFormatoFecha(fechaObtenida);
         
         var tituloh5 = $("<h5>", {
@@ -162,7 +134,7 @@ function pintarCitas(listaCitas){
             class: "card-text",
         });
         parrafo.append(tituloResponsable);
-        parrafo.append(datosPintar.NombreCliente)
+        parrafo.append(datosPintar.Propietario)
 
         var tituloTelefono = $("<strong>"); 
         tituloTelefono.text("Telefono: ");
@@ -194,7 +166,25 @@ function pintarCitas(listaCitas){
     }
 }
 
+// Función que imprime el error en caso de ser un error de ajax.
+function imprimirError(xhr){
+    try {
+        var response = JSON.parse(xhr.responseText);
+        console.log('Exitoso.');
+        console.log(response);
+      }
+      catch (e) {
+        var response = xhr.responseText;
+        console.log(
+          'There was an error: \n -> '
+          + e + '\n'
+          + 'Complete server response: \n -->'
+          + response
+        );
+    }
+}
+
 $( document ).ready(function() {
     definirEventos();
-    cargarCita();
+    obtenerCitasBaseDatos();
 });

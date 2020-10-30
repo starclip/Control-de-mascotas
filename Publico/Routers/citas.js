@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 const Cita = require("../Controladores/CitasController.js");
 
-// app.use('/login', require('./routes/login'));
-// app.use('/route2', require('./routes/route2'));
-// app.use('/route3', require('./routes/route3'));
-
+// Guarde la cita en la base de datos.
 router.post('/Guardar', Cita.create);
 
 router.post('/Eliminar', function (req, res) { 
     // Llamo a la base de datos.
 });
+
+// Obtenga la lista de citas de los usuarios.
+router.get('/ObtenerLista', Cita.findAll);
 
 module.exports = router;  

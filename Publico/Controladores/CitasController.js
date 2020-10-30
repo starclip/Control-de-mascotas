@@ -1,8 +1,9 @@
 const Cita = require('../Modelos/Cita.js');
 
+// Crea una nueva cita para el usuario.
 exports.create = (req, res) => {
-    // Se llama el método del modelo.
-    // Validate request
+
+    // Valida si el usuario ingreso parámetros.
     if (!req.body) {
         res.status(400).send({
         message: "El contenido está vacío."
@@ -27,6 +28,18 @@ exports.create = (req, res) => {
             message:
             err.message || "Some error occurred while creating the Customer."
         });
+        else res.send(data);
+    });
+};
+
+// Obtiene la lista de citas del usuario.
+exports.findAll = (req, res) => {
+    Cita.getAll((err, data) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while retrieving customers."
+          });
         else res.send(data);
     });
 };

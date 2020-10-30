@@ -1,5 +1,7 @@
+const connection = require("./db.js");
 const sql = require("./db.js");
 
+// Constructor de la clase cita.
 const Cita = function (cita){
     this.nombreMascota = cita.nombreMascota;
     this.cedula = cita.cedula;
@@ -9,6 +11,7 @@ const Cita = function (cita){
     this.fecha = cita.fecha;
 }
 
+// Cuando se cree una nueva cita.
 Cita.create = (nuevaCita, result) => {
 
     connection.query("call insertarCita(?,?)", [param1, param2], function (err, result) {
@@ -17,19 +20,20 @@ Cita.create = (nuevaCita, result) => {
         } else {
             console.log("results:", result);
         }
-    
     });
+}
 
-    // sql.query("INSERT INTO dbo.citas SET ?", nuevaCita, (err, res) => {
-    //     if (err) {
-    //       console.log("error: ", err);
-    //       result(err, null);
-    //       return;
-    //     }
-    
-    //     console.log("created customer: ", { id: res.insertId, ...newCustomer });
-    //     result(null, { id: res.insertId, ...newCustomer });
-    // });
+// Obtenga la lista de las citas.
+Cita.getAll = result => {
+
+    connection.query("call obtenerCitas", function (err, res) {
+        if (err) {
+            console.log("err:", err);
+        } else {
+            console.log("results:", res[0]);
+            result(null, res[0]);
+        }
+    });
 }
 
 module.exports = Cita;
