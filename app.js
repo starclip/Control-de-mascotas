@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const app = express();
+const app = express(); // Cargo el servidor.
 const port = 3000;
 
  //set the path of the jquery file to be used from the node_module jquery package  
@@ -10,7 +10,7 @@ app.use('/jquery',express.static(path.join(__dirname+'/node_modules/jquery/dist/
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("Publico"));
+app.use(express.static("Publico")); // Carga los archivos en la carpeta publica al servidor.
 
 // Configurar la página de inicio o home.
 app.get('/', function(req,res){
