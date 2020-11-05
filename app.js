@@ -14,7 +14,27 @@ app.use(express.static("Publico")); // Carga los archivos en la carpeta publica 
 
 // Configurar la página de inicio o home.
 app.get('/', function(req,res){
+    res.sendFile(path.join(__dirname +'/Publico/Vistas/Index.html'));
+});
+
+// Las citas de la aplicación.
+app.get('/Citas', function(req,res){
     res.sendFile(path.join(__dirname +'/Publico/Vistas/Citas/Citas.html'));
+});
+
+// Las mascotas de la aplicación.
+app.get('/Mascotas', function(req,res){
+    res.sendFile(path.join(__dirname +'/Publico/Vistas/Mascotas/Mascotas.html'));
+});
+
+// Las citas de la aplicación.
+app.get('/Clientes', function(req,res){
+    res.sendFile(path.join(__dirname +'/Publico/Vistas/Clientes/Clientes.html'));
+});
+
+// Las mascotas de la aplicación.
+app.get('/Tratamientos', function(req,res){
+    res.sendFile(path.join(__dirname +'/Publico/Vistas/Tratamientos/Tratamientos.html'));
 });
 
 // Configure los routers de la aplicación.

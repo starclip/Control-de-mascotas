@@ -13,3 +13,34 @@
 .imageCard{
     height: 100px;
 }
+
+.nav-item{
+    font-family: "Comic Sans MS", cursive, sans-serif; 
+    font-size: 24px; 
+    color: black;
+}
+
+.bigContainer {
+    background-color: white;
+}
+
+.info-bar {
+    background-color: orangered;
+    color: black;
+}
+
+.info-bar p{
+    /*color: white;*/
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#infoBarUsuario {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.info-bar a{
+    margin-left: 10px;
+    color: black;
+}
