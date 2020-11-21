@@ -5,10 +5,18 @@
         <!-- Librerias de CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="Estilos/General.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/f8ca65ef4d.js" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <title>Programación de Citas</title>
+        <style>
+            /* Make the image fully responsive */
+            .carousel-inner img {
+              width: 100%;
+              height: 100%;
+            }
+            </style>
     </head>
     <!-- Va el contenido o el valor que vaya a tener las páginas. -->
     <body class="bigContainer">
@@ -52,6 +60,45 @@
                     <a class="nav-item nav-link" href="/Citas">Citas</a>
                     <a class="nav-item nav-link" href="/Tratamientos">Tratamientos</a>
                 </nav>
+            </div>
+            <div class="container">
+
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                      <li data-target="#myCarousel" data-slide-to="1"></li>
+                      <li data-target="#myCarousel" data-slide-to="2"></li>
+                      <li data-target="#myCarousel" data-slide-to="3"></li>
+                    </ol>
+                  
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="../Imagenes/FondoPerro.jpg" alt="Chania">
+                      </div>
+                  
+                      <div class="carousel-item">
+                        <img src="../Imagenes/FondoFamiliaPerros.jpg" alt="Chania">
+                      </div>
+                  
+                      <div class="carousel-item">
+                        <img src="../Imagenes/FondoPareja.jpg" alt="Flower">
+                      </div>
+                  
+                      <div class="carousel-item">
+                        <img src="../Imagenes/FondoGato.jpg" alt="Flower">
+                      </div>
+                    </div>
+                  
+                    <!-- Left and right controls -->
+                    <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                      </a>
+                      <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                      </a>
+                  </div>
             </div>
         </div>
     </body>
