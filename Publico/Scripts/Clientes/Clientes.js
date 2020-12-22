@@ -1,11 +1,36 @@
 // Función que va a base de datos trae las citas del día de hoy y crea el html cargandolo en la página.
 function obtenerCitasBaseDatos(){
+    // Obtiene los clientes para bases de datos.
+    var url = "/Clientes/ObtenerLista";
+    $.ajax({
+        url: url,  
+        type:'GET', 
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status){ 
+            pintarClientes(data);
+        },
+        error: imprimirError
+    })
 
-    var datos = [{ Nombre:"Jason de jesus",Cedula:"115784647",Telefono:"222458787", Correo:"ElChata@gmail.com", MascotasAsociadas:"Sho, vivi", Direccion:"Hatillos", Id:"1"},
-    { Nombre:"Samantha Mendoza",Cedula:"115778899",Telefono:"222878787", Correo:"samyprlt@gmail.com", MascotasAsociadas:"Riley", Direccion:"HSan diego",Id:"1"},
-    { Nombre:"Sergio",Cedula:"1123123123",Telefono:"87430505", Correo:"sergio@gmail.com", MascotasAsociadas:"Holly", Direccion:"Tres ríos",Id:"1"}  ]
+}
 
-    pintarClientes(datos);
+// Función que imprime el error en caso de ser un error de ajax.
+function imprimirError(xhr){
+    try {
+        var response = JSON.parse(xhr.responseText);
+        console.log('Exitoso.');
+        console.log(response);
+      }
+      catch (e) {
+        var response = xhr.responseText;
+        console.log(
+          'There was an error: \n -> '
+          + e + '\n'
+          + 'Complete server response: \n -->'
+          + response
+        );
+    }
 }
 
 // Función que va a crear un objeto de Jquery con el código html.
@@ -38,9 +63,6 @@ function pintarClientes(listaClientes){
         var listaDireccion = $("<td>");
         listaDireccion.text(datosPintar.Direccion);
         
-
-      
-
         var listaIds = $("<td>",{
             style: "display:none",
             text: datosPintar.id

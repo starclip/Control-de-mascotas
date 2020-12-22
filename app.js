@@ -39,6 +39,7 @@ app.get('/Tratamientos', function(req,res){
 
 // Configure los routers de la aplicación.
 app.use('/Citas', require('./Publico/Routers/citas.js')); // router de las citas.
+app.use('/Clientes', require('./Publico/Routers/Clientes.js')); // router de los clientes.
 
 app.listen(port);
 console.debug('Server listening on port ' + port);

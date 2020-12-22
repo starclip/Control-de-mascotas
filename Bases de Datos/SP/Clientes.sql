@@ -5,8 +5,8 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerClientes`()
     NO SQL
 
-    SELECT P.IdPersona,
-    P.cedula, 
+    SELECT C.IdCliente,
+    P.Cedula, 
     P.Nombre,
     P.Apellido, 
     P.Correo, 
