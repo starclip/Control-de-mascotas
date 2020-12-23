@@ -60,9 +60,9 @@
               </div>
               <div id="botones" class="row">
                   <div class="col-md-6">
-                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCita">Agregar</button>
-                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCita">Editar</button>
-                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#">Eliminar</button> 
+                      <button id="Agregar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCita">Agregar</button>
+                      <button id="Editar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCita">Editar</button>
+                      <button id="Eliminar" type="button" class="btn btn-success" data-toggle="modal" data-target="#">Eliminar</button> 
                   </div>
               </div>
               <hr class="divisorLinea">
@@ -85,37 +85,41 @@
                   <div class="modal-body">
                       <form id="formularioCitas">
                           <div class="form-group">
-                          <div class="row">
+                            <div class="row">
                               <div class="col">
-                                  <label>Nombre de la mascota:</label>
-                                  <input type="text" name="NombreMascota" class="form-control" placeholder="puppy">
-                                </div>
-                                <div class="col">
-                                  <label>Cédula:</label>
-                                  <input type="text" name="Cedula" class="form-control" placeholder="115780875">
+                                <label>Cédula:</label>
+                                <div class="input-group mb-3">
+                                  <input type="text" name="Cedula" class="form-control" placeholder="X-XXXX-XXXX" aria-label="Cédula"  aria-describedby="Digito de nueve dígitos">
+                                  <div class="input-group-append">
+                                    <button type="button" class="btn btn-labeled btn-info">
+                                      <span class="btn-label"><i class="fas fa-search"></i></span></button>
+                                  </div>
                                 </div>
                               </div>
-                          <div class="row">
                               <div class="col">
                                 <label>Nombre:</label>
-                                <input type="text" name="Propietario" class="form-control" placeholder="Jason">
+                                <input type="text" name="Propietario" class="form-control" placeholder="">
+                              </div>
+                            </div>
+                          <div class="row">
+                              <div class="col" style="height: 86px;">
+                                <label>Mascota:</label>
+                                <input type="text" name="Mascota" class="form-control" placeholder="">
                               </div>
                               <div class="col">
-                                  <label>Apellido:</label>
-                                <input type="text" name="Apellido" class="form-control" placeholder="Barrantes">
+                                  <label>Teléfono:</label>
+                                <input type="text" name="Telefono" class="form-control" placeholder="XXXX-XXXX">
                               </div>
                             </div>
   
                             <div class="row">
                               <div class="col">
-                                <label>Seleccione la hora:</label>
-                               <input type="time" name="Hora" id="default-picker" class="form-control" placeholder="Select time">
+                                <label>Hora:</label>
+                                <input type="time" name="Hora" id="default-picker" class="form-control" placeholder="hh:mm">
                               </div>
-                              <div class="col input-with-post-icon datepicker">
-                                  
-                                  <label>Seleccione la fecha:</label>
-                                  <input placeholder="Seleccionar fecha" name="Fecha" type="text" id="accessibility-example" class="form-control">
-                                  <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                              <div class="col">
+                                <label>Fecha:</label>
+                                <input type="date" name="Fecha" class="form-control" placeholder="dd/mm/yyyy" />
                               </div>
                             </div>
                       </form>
