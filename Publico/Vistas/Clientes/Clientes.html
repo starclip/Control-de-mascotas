@@ -51,28 +51,28 @@
             <a class="nav-item nav-link" href="/Tratamientos">Tratamientos</a>
         </nav>
         
-    <div id="ListaClientes" class="row">
+    <div id="titulo" class="row">
         <div id="columnaTitulo" class="col-md">
             <h2>Clientes registrados</h2>
         </div>
     </div>
     <div id="botones" class="row">
         <div class="col-md-3">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCliente">Agregar</button> 
-            
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCliente">Editar</button> 
-            <button type="button" class="btn btn-success">Eliminar</button> 
+            <button id="AgregarCliente" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCliente">Agregar</button> 
+            <button id="EditarCliente" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCliente">Editar</button> 
+            <button id="EliminarCliente" type="button" class="btn btn-success" data-toggle="modal" data-target="#">Eliminar</button> 
         </div>
     </div>
     <hr class="divisorLinea">
     <div id="contenedorClientes" class="row">
         <div id="columnaContenedorClientes" class="col-md-12">
-            <h2>Registro de cliente</h2>
+
 
             <table class="table table-hover" id="tablaClientes">
                 <thead>
                   <tr>
                     <th>Nombre</th>
+                    <th>Apellidos</th>
                     <th>Cédula</th>
                     <th>Teléfono</th>
                     <th>Correo</th>
@@ -80,20 +80,15 @@
                     <th>Dirección</th>
                   </tr>
                 </thead>
-                <tbody id="TablaCuerpo">
-                   
-                  
+                <tbody id="TablaCuerpo">    
                 </tbody>
               </table>
-
         </div>
     </div>
+</div>
 
 
-    <!--
-
-
-    <div class="modal fade" id="#ModalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="ModalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -104,27 +99,9 @@
             </div>
             <div class="modal-body">
                 <form id="formularioClientes">
-                    <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <label>Nombre:</label>
-                            <input type="text" name="NombrePersona" class="form-control" placeholder="Samantha">
-                          </div>
-                          <div class="col">
-                            <label>Cédula:</label>
-                            <input type="text" name="Cedula" class="form-control" placeholder="115780875">
-                          </div>
-                        </div>
-                    <div class="row">
-                        <div class="col">
-                          <label>Telefono:</label>
-                          <input type="text" name="Telefono" class="form-control" placeholder="22221111">
-                        </div>
-                        <div class="col">
-                            <label>Dirección:</label>
-                          <input type="text" name="Direccion" class="form-control" placeholder="San Jóse">
-                        </div>
-                      </div>
+                    
+
+
 
                 </form>
                 <hr class="divisorLinea">
@@ -132,16 +109,13 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
                 <button id="Guardar" type="button" class="btn btn-success">Guardar cliente</button>
-                          </div>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
       </div>
     </div>
+</div>
+</div>
  
--->
-
     <script type="text/javascript" src="Scripts/Clientes/Clientes.js"></script>
 </body>
     <!-- Van las referencias finales de la página. -->

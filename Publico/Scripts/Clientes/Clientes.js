@@ -1,4 +1,4 @@
-/*
+
 // Función que define los eventos que van a suceder cuando un usuario presione un botón.
 function definirEventos(){
 
@@ -6,13 +6,15 @@ function definirEventos(){
     $('#ModalAgregarCliente').on('show.bs.modal', function(e) {
         var reference_tag = $(e.relatedTarget); 
         var id = reference_tag.attr("id");
+        debugger;
 
         // Decide si trae la información de la base de datos dependiendo de la acción realizada por el usuario.
+       
        // configurarModal(id);
 
         // Traer la información de la base de datos.
-        if (id == "Editar"){
-        }
+        //if (id == "Editar"){
+      //  }
     });
 
     $("#formularioClientes").on("submit", function(e){
@@ -57,7 +59,6 @@ function definirEventos(){
 }
 
 
-*/
 
 
 
@@ -81,6 +82,7 @@ function obtenerClientesBaseDatos(){
 
 // Función que imprime el error en caso de ser un error de ajax.
 function imprimirError(xhr){
+    debugger;
     try {
         var response = JSON.parse(xhr.responseText);
         console.log('Exitoso.');
@@ -97,11 +99,11 @@ function imprimirError(xhr){
     }
 }
 
-// Función que va a crear un objeto de Jquery con el código html.
+// Función que va a crear un objeto de Jquery con el código html. Usamos los campos del
+// del procedimiento ObtenerClientes()
 function pintarClientes(listaClientes){
 
     var datosPintar;
-    debugger;
 
     for(var i = 0; i < listaClientes.length; i++){
         datosPintar = listaClientes[i];
@@ -111,7 +113,10 @@ function pintarClientes(listaClientes){
 
         var listaNombre = $("<td>");
         listaNombre.text(datosPintar.Nombre);
-            
+
+        var listaApellido = $("<td>");
+        listaApellido.text(datosPintar.Apellido);
+        
         var listaCedulas = $("<td>");
         listaCedulas.text(datosPintar.Cedula);
 
@@ -122,7 +127,7 @@ function pintarClientes(listaClientes){
         listaCorreos.text(datosPintar.Correo);
 
         var listaMascotas = $("<td>");
-        listaMascotas.text(datosPintar.MascotasAsociadas);
+        listaMascotas.text(datosPintar.Mascota);
    
         var listaDireccion = $("<td>");
         listaDireccion.text(datosPintar.Direccion);
@@ -133,6 +138,7 @@ function pintarClientes(listaClientes){
         });
      
         Fila.append(listaNombre);
+        Fila.append(listaApellido);
         Fila.append(listaCedulas);
         Fila.append(listaTelefonos);
         Fila.append(listaCorreos);
@@ -144,6 +150,6 @@ function pintarClientes(listaClientes){
 }
 
 $( document ).ready(function() {
-  //  definirEventos();
+    definirEventos();
     obtenerClientesBaseDatos();
 });
