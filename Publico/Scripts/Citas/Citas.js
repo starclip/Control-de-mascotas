@@ -11,13 +11,13 @@ function definirEventos(){
 
         // Traer la información de la base de datos.
         if (id == "Editar"){
+            obtenerCitaEspecifica();
         }
     });
 
     $("#formularioCitas").on("submit", function(e){
         e.preventDefault(); // avoid to execute the actual submit of the form.
 
-        debugger;
         var datos = $(this).serialize();
         var url = "/Citas/Guardar";
 
@@ -30,22 +30,7 @@ function definirEventos(){
             success: function(data, status){  
                 console.log('message', data.message);
             },
-            error: function(xhr) {
-                try {
-                  var response = JSON.parse(xhr.responseText);
-                  console.log('Success');
-                  console.log(response);
-                }
-                catch (e) {
-                  var response = xhr.responseText;
-                  console.log(
-                    'There was an error: \n -> '
-                    + e + '\n'
-                    + 'Complete server response: \n -->'
-                    + response
-                  );
-                }
-              }
+            error: imprimirError
         });  
     });
 
@@ -53,6 +38,26 @@ function definirEventos(){
     $("#Guardar").on('click', function(e) {
         $("#formularioCitas").trigger("submit");
     });
+}
+
+// Función que obtiene los datos específicos de un registro.
+function obtenerCitaEspecifica(){
+    var elementoSeleccionado = $(".card.active");
+    var idCita = $(elementoSeleccionado).find("#idCita").val();
+    debugger;
+    var url = "/Citas/Obtener";
+    $.ajax({  
+        url: url,  
+        type:'POST', 
+        dataType: "json",
+        data: { "IdCita": idCita },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(data, status){  
+            // Cargar los datos específicos del registro.
+            debugger;
+        },
+        error: imprimirError
+    });  
 }
 
 // Función que va a base de datos trae las citas del día de hoy y crea el html cargandolo en la página.
@@ -102,7 +107,6 @@ function pintarCitas(listaCitas){
     for(var i = 0; i < listaCitas.length; i++){
         datosPintar = listaCitas[i];
 
-        //debugger;
         var contenedor = $("<div>",{ 
             class: "row"
         });
@@ -115,6 +119,12 @@ function pintarCitas(listaCitas){
         var contenedorCard = $("<div>", {
             class: "card"
         });
+
+        contenedorCard.on("mouseenter", entrarCard);
+
+        contenedorCard.on("mouseleave", salirCard);
+
+        contenedorCard.on("click", seleccionarCard);
 
         var rowCardBody = $("<div>", {
             class: "row card-body"
@@ -195,6 +205,13 @@ function pintarCitas(listaCitas){
             alt:"Mascota",
             src: "../Imagenes//"+(datosPintar.Foto ? datosPintar.Foto : "defecto.jpg")
         });
+
+        var inputIdCita = $("<input>", {
+            type: "hidden",
+            id: "idCita",
+            value: datosPintar.IdCita
+        });
+
         
         columnaTituloCard.append(tituloh5);
         columnaTituloMascota.append(nombreMascota);
@@ -205,6 +222,7 @@ function pintarCitas(listaCitas){
         colSm6.append(parrafo);
         colSm6.append(telefonoCard);
         colSm6.append(veterinarioCard);
+        colSm6.append(inputIdCita);
 
         rowCardBody.append(colSm6);
         rowCardBody.append(imagen);
@@ -253,6 +271,67 @@ function configurarModal(evento){
         $("input[name='Hora']").removeAttr('disabled', 'disabled');
         $("input[name='Fecha']").removeAttr('disabled', 'disabled');
     }
+}
+
+// Función que se ejecuta cuando se selecciona un registro de la lista.
+function seleccionarCard(evento){
+    var esIgual = false;
+    var listaClasesActive = $(".card.active");
+    var idSeleccionado = $(this).find("#idCita").val();
+    var idTemporal = 0;
+
+    for(var i = 0; i < listaClasesActive.length; i++){
+        idTemporal = $(listaClasesActive[i]).find("#idCita").val();
+        if (idSeleccionado == idTemporal){
+            esIgual = true;
+        }
+
+        // Convierta a blanco los campos que anteriormente fueron seleccionados.
+        $(listaClasesActive[i]).removeClass("active");
+        $(listaClasesActive[i]).css({ "background-color": "white", "cursor": "auto" });
+    }
+
+    // Si es el mismo registro es el que se está seleccionando nuevamente. Si no, se selecciona.
+    if (esIgual){
+        $(this).removeClass("active");
+        $("#Editar").attr('disabled', 'disabled');
+        $("#Eliminar").attr('disabled', 'disabled');
+    }
+    else{
+        $(this).addClass("active");
+        $("#Editar").removeAttr('disabled', 'disabled');
+        $("#Eliminar").removeAttr('disabled', 'disabled');
+    }
+}
+
+// Función que se ejecuta cuando se pasa el mouse por encima de un elemento.
+function entrarCard(evento){
+    var listaClases = $(this).attr('class').split(' ');
+    var estaIncluido = false;
+    var clase;
+    for(var i = 0; i < listaClases.length; i++){
+        clase = listaClases[i];
+        if (clase == 'active')
+            estaIncluido = true;
+    }
+
+    if (!estaIncluido)
+        $(this).css({ "background-color": "#A19C9B", "cursor": "pointer" });
+}
+
+// Función que se ejecuta cuando se sale del mouse en un elemento.
+function salirCard(evento){
+    var listaClases = $(this).attr('class').split(' ');
+    var estaIncluido = false;
+    var clase;
+    for(var i = 0; i < listaClases.length; i++){
+        clase = listaClases[i];
+        if (clase == 'active')
+            estaIncluido = true;
+    }
+
+    if (!estaIncluido)
+        $(this).css({ "background-color": "white", "cursor": "auto" });
 }
 
 $( document ).ready(function() {

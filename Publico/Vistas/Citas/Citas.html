@@ -13,7 +13,7 @@
     <!-- Va el contenido o el valor que vaya a tener las páginas. -->
     <body class="bigContainer">
       <div class="container-fluid">
-          <div class="row info-bar">
+        <div class="row info-bar">
               <div class="col-sm-4">
                   <p id="infoBarTitulo" class="text-center align-middle">Clínica de mascotas Rodrigo Facio</p>
               </div>
@@ -21,7 +21,6 @@
                   <div class="row">
                       <p id="infoBarTelefono" class="text-center align-middle">+506 2201 4891 <i class="fa fa-phone" aria-hidden="true"></i></p>
                   </div>
-              
               </div>
               <div class="col-sm-4">
                   <div class="row justify-content-center" id="infoBarUsuario">
@@ -41,8 +40,8 @@
               </div>
         </div>
 
-          <div class="container">
-              <nav class="navbar collapse navbar-collapse navbar-light">
+        <div class="container">
+            <nav class="navbar collapse navbar-collapse navbar-light">
                   <a class="navbar-brand" href="/">
                       <img src="../Imagenes/logoMascotaDos.png" width="90" height="90" alt="">
                   </a>
@@ -51,29 +50,29 @@
                   <a class="nav-item nav-link" href="/Clientes">Clientes</a>
                   <a class="nav-item nav-link" href="/Citas">Citas</a>
                   <a class="nav-item nav-link" href="/Tratamientos">Tratamientos</a>
-              </nav>
+            </nav>
 
-              <div id="titulo" class="row">
+            <div id="titulo" class="row">
                 <div id="columnaTitulo" class="col-md">
                   <h2>Hoy</h2>
                 </div>
-              </div>
-              <div id="botones" class="row">
+            </div>
+            <div id="botones" class="row">
                   <div class="col-md-6">
                       <button id="Agregar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCita">Agregar</button>
-                      <button id="Editar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCita">Editar</button>
-                      <button id="Eliminar" type="button" class="btn btn-success" data-toggle="modal" data-target="#">Eliminar</button> 
+                      <button id="Editar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCita" disabled="disabled">Editar</button>
+                      <button id="Eliminar" type="button" class="btn btn-success" data-toggle="modal" data-target="#" disabled="disabled">Eliminar</button> 
                   </div>
-              </div>
-              <hr class="divisorLinea">
-              <div id="contenedorCitas" class="row">
-                  <div id="columnaContenedoraCitas" class="col-md-12">
+            </div>
+            <hr class="divisorLinea">
+            <div id="contenedorCitas" class="row">
+              <div id="columnaContenedoraCitas" class="col-md-12">
   
-                  </div>
               </div>
             </div>
+        </div>
   
-            <div class="modal fade" id="ModalAgregarCita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="ModalAgregarCita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -131,10 +130,8 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+        </div>
       </div>
-    </div>
       <script type="text/javascript" src="Scripts/Citas/Citas.js"></script>
     </body>
     <!-- Van las referencias finales de la página. -->
