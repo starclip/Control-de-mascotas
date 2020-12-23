@@ -23,7 +23,7 @@ Cliente.create = (nuevaCita, result) => {
         }
     });
 }
-
+/*
 // Obtenga la lista de las citas.
 Cita.getAll = result => {
 
@@ -37,4 +37,6 @@ Cita.getAll = result => {
     });
 }
 
-module.exports = Cita;
+
+*/
+module.exports = Cliente;
