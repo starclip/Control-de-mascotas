@@ -4,9 +4,14 @@ function definirEventos(){
     // Evento que se ejecuta cuando se cargue el contenido del modal.
     $('#ModalAgregarCita').on('show.bs.modal', function(e) {
         var reference_tag = $(e.relatedTarget); 
-        var id = reference_tag.data('id');
+        var id = reference_tag.attr("id");
 
         // Decide si trae la información de la base de datos dependiendo de la acción realizada por el usuario.
+        configurarModal(id);
+
+        // Traer la información de la base de datos.
+        if (id == "Editar"){
+        }
     });
 
     $("#formularioCitas").on("submit", function(e){
@@ -119,13 +124,38 @@ function pintarCitas(listaCitas){
             class: "col-sm-9"
         });
 
+        // Creo el card. Todo el card se inserta en colSm6.
+
+        // Se inserta la fecha y el nombre de la mascota.
         var fechaObtenida = new Date(datosPintar.Fecha);
         var hora = obtenerFormatoFecha(fechaObtenida);
         
-        var tituloh5 = $("<h5>", {
-            class: "card-title",
-            text: "Hora: " + hora
+        var filaTituloCard = $("<div>", {
+           class: "row" 
         });
+
+        var columnaTituloCard = $("<div>", {
+            class: "col-sm-6"
+        });
+
+        var columnaTituloMascota = $("<div>", {
+            class: "col-sm-6"
+        });
+
+        var tituloh5 = $("<h5>", {
+            class: "card-title"
+        });
+
+        var horaTexto = $("<strong>");
+        horaTexto.text("Hora: ");
+        tituloh5.append(horaTexto);
+        tituloh5.append(hora);
+
+        var nombreMascota = $("<h5>", {
+            text: datosPintar.NombreMascota
+        });
+
+        // Se inserta el texto del responsable de la mascota.
 
         var tituloResponsable = $("<strong>"); 
         tituloResponsable.text("Responsable: ");
@@ -136,25 +166,45 @@ function pintarCitas(listaCitas){
         parrafo.append(tituloResponsable);
         parrafo.append(datosPintar.Propietario)
 
+        // Se inserta el texto del teléfono del responsable.
+
         var tituloTelefono = $("<strong>"); 
         tituloTelefono.text("Telefono: ");
 
         var telefonoCard = $("<p>", {
-            class: "text-telefono"
+            class: "card-text"
         });
         telefonoCard.append(tituloTelefono);
         telefonoCard.append(datosPintar.Telefono);
 
-        
+        // Se inserta el texto del veterinario encargado de la cita.
+
+        var tituloVeterinario = $("<strong>");
+        tituloVeterinario.text("Veterinario: ");
+
+        var veterinarioCard = $("<p>", {
+            class: "card-text"
+        });
+        veterinarioCard.append(tituloVeterinario);
+        veterinarioCard.append(datosPintar.Veterinario);
+
+        // Se inserta la imagen.
+
         var imagen = $("<img>", {
             class: "imageCard col-sm-2",
             alt:"Mascota",
             src: "../Imagenes//"+(datosPintar.Foto ? datosPintar.Foto : "defecto.jpg")
         });
+        
+        columnaTituloCard.append(tituloh5);
+        columnaTituloMascota.append(nombreMascota);
+        filaTituloCard.append(columnaTituloCard);
+        filaTituloCard.append(columnaTituloMascota);
 
-        colSm6.append(tituloh5);
+        colSm6.append(filaTituloCard);
         colSm6.append(parrafo);
         colSm6.append(telefonoCard);
+        colSm6.append(veterinarioCard);
 
         rowCardBody.append(colSm6);
         rowCardBody.append(imagen);
@@ -181,6 +231,27 @@ function imprimirError(xhr){
           + 'Complete server response: \n -->'
           + response
         );
+    }
+}
+
+// Función que permite habilitar los campos a la hora de abrir o cerrar un modal.
+function configurarModal(evento){
+
+    if (evento == 'Agregar')
+    {
+        $("input[name='Cedula']").removeAttr('disabled', 'disabled');
+        $("input[name='Propietario']").attr('disabled', 'disabled');
+        $("input[name='Mascota']").attr('disabled', 'disabled');
+        $("input[name='Telefono']").attr('disabled', 'disabled');
+        $("input[name='Hora']").attr('disabled', 'disabled');
+        $("input[name='Fecha']").attr('disabled', 'disabled');
+    }else{
+        $("input[name='Cedula']").attr('disabled', 'disabled');
+        $("input[name='Propietario']").attr('disabled', 'disabled');
+        $("input[name='Mascota']").attr('disabled', 'disabled');
+        $("input[name='Telefono']").removeAttr('disabled', 'disabled');
+        $("input[name='Hora']").removeAttr('disabled', 'disabled');
+        $("input[name='Fecha']").removeAttr('disabled', 'disabled');
     }
 }
 

@@ -12,7 +12,9 @@ SELECT
         CONCAT(P.Nombre, ' ', P.Apellido) AS Propietario,
         C.Fecha,
         P.Telefono,
-        M.IdCliente 
+        M.IdCliente,
+        V.IdVeterinario,
+        CONCAT('Dr. ', PV.Nombre, ' ', PV.Apellido) AS Veterinario
     FROM cita C
     INNER JOIN mascota M
         ON M.IdMascota = C.IdMascota
@@ -20,6 +22,9 @@ SELECT
         ON M.IdCliente = CL.IdCliente
     INNER JOIN persona P
         ON P.IdPersona = CL.IdPersona
-    WHERE DATE(C.Fecha) = DATE(NOW())$$
+    INNER JOIN veterinario V
+    	ON V.IdVeterinario = C.IdVeterinario
+    INNER JOIN persona PV
+    	ON PV.IdPersona = V.IdPersona$$
 DELIMITER ;
 
