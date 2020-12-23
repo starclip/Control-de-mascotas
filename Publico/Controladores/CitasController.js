@@ -49,7 +49,33 @@ exports.update = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
+    // Valida si el usuario ingreso parámetros.
+    if (!req.body) {
+        res.status(400).send({
+        message: "El contenido está vacío."
+        });
+    }
 
+    // Valida si el usuario ingreso el id de la cita.
+    if (!req.body.IdCita){
+        res.status(400).send({
+            message: "No envío ningún id de la cita."
+        });
+    }
+
+    const idCita = req.body.IdCita;
+
+    Cita.getOne(idCita, (err, resultado) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "No se encontraron datos referentes con respecto a esa cita."
+          });
+        else {
+            const citaSeleccionada = new Cita(resultado);
+            res.send(citaSeleccionada);
+        }
+    });
 };
 
 exports.delete = (req, res) => {
