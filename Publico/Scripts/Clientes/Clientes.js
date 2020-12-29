@@ -10,17 +10,17 @@ function definirEventos(){
 
         // Decide si trae la información de la base de datos dependiendo de la acción realizada por el usuario.
        
-       // configurarModal(id);
+        configurarModal(id);
 
-        // Traer la información de la base de datos.
-        //if (id == "Editar"){
-      //  }
+       // Traer la información de la base de datos.
+       if (id == "Editar"){
+            obtenerClienteEspecifico();
+        }
     });
 
     $("#formularioClientes").on("submit", function(e){
         e.preventDefault(); // avoid to execute the actual submit of the form.
 
-        debugger;
         var datos = $(this).serialize();
         var url = "/Clientes/Guardar";
 
@@ -33,22 +33,7 @@ function definirEventos(){
             success: function(data, status){  
                 console.log('message', data.message);
             },
-            error: function(xhr) {
-                try {
-                  var response = JSON.parse(xhr.responseText);
-                  console.log('Success');
-                  console.log(response);
-                }
-                catch (e) {
-                  var response = xhr.responseText;
-                  console.log(
-                    'There was an error: \n -> '
-                    + e + '\n'
-                    + 'Complete server response: \n -->'
-                    + response
-                  );
-                }
-              }
+            error: imprimirError
         });  
     });
 
@@ -57,6 +42,29 @@ function definirEventos(){
         $("#formularioClientes").trigger("submit");
     });
 }
+
+function obtenerClienteEspecifico()
+{
+    var elementoSeleccionado = $("tr.active");
+    var idCliente = $(elementoSeleccionado).find("#idCliente").attr("value");
+    debugger;
+    /*
+    var url = "/Citas/Obtener";
+    $.ajax({  
+        url: url,  
+        type:'POST', 
+        dataType: "json",
+        data: { "IdCita": idCita },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(data, status){  
+            // Cargar los datos específicos del registro.
+            debugger;
+        },
+        error: imprimirError
+    });  
+    */
+}
+
 
 
 
@@ -99,17 +107,52 @@ function imprimirError(xhr){
     }
 }
 
+function configurarModal(evento){
+    if (evento == 'Agregar')
+    {
+        $("#exampleModalLabel").text("Agregar cliente");
+    }else{
+        $("#exampleModalLabel").text("Editar cliente");
+    }
+}
+
+function seleccionar(evento){
+    var esIgual = false;
+    var listaClasesActive = $("tr.active");
+    var idSeleccionado = $(this).attr("id");
+    var idTemporal = 0;
+
+    for(var i =0; i < listaClasesActive.length; i++){
+        idTemporal= $(listaClasesActive[i]).attr("id");
+        if(idSeleccionado == idTemporal)
+        {
+            esIgual = true;
+        }
+        $(listaClasesActive[i]).removeClass("active");
+    }
+    if (!esIgual) {
+        $(this).addClass("active");
+    }
+    else{
+        $(this).removeClass("active");
+    }
+}
+
 // Función que va a crear un objeto de Jquery con el código html. Usamos los campos del
 // del procedimiento ObtenerClientes()
 function pintarClientes(listaClientes){
 
     var datosPintar;
 
+
     for(var i = 0; i < listaClientes.length; i++){
         datosPintar = listaClientes[i];
 
         
-        var Fila =$("<tr>");
+        var Fila =$("<tr>", {
+            id: i + 1
+        });
+        Fila.on("click",seleccionar);
 
         var listaNombre = $("<td>");
         listaNombre.text(datosPintar.Nombre);
@@ -133,8 +176,9 @@ function pintarClientes(listaClientes){
         listaDireccion.text(datosPintar.Direccion);
         
         var listaIds = $("<td>",{
+            id:"idCliente",
             style: "display:none",
-            text: datosPintar.id
+            value: datosPintar.IdCliente
         });
      
         Fila.append(listaNombre);

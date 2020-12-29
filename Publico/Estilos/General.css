@@ -52,3 +52,7 @@
 .card.active {
     background-color: gray !important;
 }
+
+tr.active{
+    background-color: aqua !important;
+}
