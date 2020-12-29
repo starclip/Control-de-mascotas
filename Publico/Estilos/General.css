@@ -67,3 +67,7 @@
     font-size: 1rem;
     opacity: 1 !important;
 }
+
+tr.active{
+    background-color: #0881AD !important;
+}
