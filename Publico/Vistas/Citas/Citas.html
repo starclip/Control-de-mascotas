@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="Estilos/General.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/f8ca65ef4d.js" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <title>Programación de Citas</title>
@@ -90,7 +91,7 @@
                                 <div class="input-group mb-3">
                                   <input type="text" name="Cedula" class="form-control" placeholder="X-XXXX-XXXX" aria-label="Cédula"  aria-describedby="Digito de nueve dígitos">
                                   <div class="input-group-append">
-                                    <button type="button" class="btn btn-labeled btn-info">
+                                    <button id="botoncedula" type="button" class="btn btn-labeled btn-info">
                                       <span class="btn-label"><i class="fas fa-search"></i></span></button>
                                   </div>
                                 </div>
@@ -103,7 +104,11 @@
                           <div class="row">
                               <div class="col" style="height: 86px;">
                                 <label>Mascota:</label>
-                                <input type="text" name="Mascota" class="form-control" placeholder="">
+                                <div class="dropdown">
+                                  <button class="btn btn-light form-control" name="Mascota" type="button" id="botonListaMascotas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">No se ha seleccionado</button>
+                                  <div id="listaMascotas" class="dropdown-menu" aria-labelledby="botonListaMascotas">
+                                  </div>
+                                </div>
                               </div>
                               <div class="col">
                                   <label>Teléfono:</label>
@@ -121,12 +126,16 @@
                                 <input type="date" name="Fecha" class="form-control" placeholder="dd/mm/yyyy" />
                               </div>
                             </div>
+                            <input type="hidden" name="IdCita" />
+                            <input type="hidden" name="IdMascota" />
+                            <input type="hidden" name="IdCliente" />
+                            <input type="hidden" name="IdVeterinario" />
                       </form>
                       <hr class="divisorLinea">
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
-                      <button id="Guardar" type="button" class="btn btn-success">Guardar cita</button>
+                      <button id="Guardar" type="button" class="btn btn-success">Guardar</button>
                   </div>
                 </div>
               </div>

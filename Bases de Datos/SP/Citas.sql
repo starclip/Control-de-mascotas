@@ -56,3 +56,25 @@ SELECT
     	ON PV.IdPersona = V.IdPersona
 WHERE C.IdCita = IdCita$$
 DELIMITER ;
+
+/* Se crea el procedimiento para obtener los datos dado una cédula específica. */
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerDatosCedula`(IN `cedula` VARCHAR(12))
+    NO SQL
+SELECT 
+C.IdCliente,
+CONCAT(P.Nombre, ' ', P.Apellido) AS Propietario,
+P.Telefono,
+M.IdMascotas,
+M.NombreMascotas
+FROM persona P
+INNER JOIN cliente C
+ON P.IdPersona = C.IdPersona
+INNER JOIN (
+        SELECT IdCliente, GROUP_CONCAT(IdMascota) AS IdMascotas, GROUP_CONCAT(Nombre) AS NombreMascotas
+        FROM mascota
+        GROUP BY IdCliente
+    ) M
+    ON M.IdCliente = C.IdCliente
+WHERE P.cedula = cedula$$
+DELIMITER ;

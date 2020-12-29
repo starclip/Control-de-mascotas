@@ -78,6 +78,33 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.findId = (req, res) => {
+    // Valida si el usuario ingreso parámetros.
+    if (!req.body) {
+        res.status(400).send({
+        message: "El contenido está vacío."
+        });
+    }
+
+    // Valida si el usuario ingreso el id de la cita.
+    if (!req.body.Cedula){
+        res.status(400).send({
+            message: "No se ingresó ninguna cédula."
+        });
+    }
+
+    const cedula = req.body.Cedula;
+
+    Cita.getDataId(cedula, (err, resultado) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "No se encontraron datos referentes con respecto a esa cédula."
+          });
+        else res.send(resultado);
+    });
+};
+
 exports.delete = (req, res) => {
 
 };

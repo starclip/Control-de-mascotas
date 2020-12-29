@@ -20,7 +20,7 @@ const Cita = function (cita){
 // Cuando se cree una nueva cita.
 Cita.create = (nuevaCita, result) => {
 
-    connection.query("call insertarCita(?,?)", [param1, param2], function (err, result) {
+    connection.query("call insertarCita(?,?)", [nuevaCita, nuevaCita], function (err, result) {
         if (err) {
             console.log("err:", err);
         } else {
@@ -48,6 +48,17 @@ Cita.getOne = (idCita, result) => {
     connection.query("call obtenerCita(?)", [idCita], function (err, res) {
         if (err) {
             console.log("err:", err);
+        } else {
+            result(null, res[0][0]);
+        }
+    });
+}
+
+// Obtenga los datos de una persona dada una cédula.
+Cita.getDataId = (cedula, result) => {
+    connection.query("call obtenerDatosCedula(?)", [cedula], function (err, res) {
+        if (err) {
+            console.log("Error:", err);
         } else {
             result(null, res[0][0]);
         }

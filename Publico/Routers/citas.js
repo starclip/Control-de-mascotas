@@ -12,6 +12,9 @@ router.post('/Eliminar', function (req, res) {
 // Obtiene la cita específica de la base de datos.
 router.post('/Obtener', Cita.findOne);
 
+// Obtener los datos necesarios para una cita dado una cédula.
+router.post('/ObtenerDatosCedula', Cita.findId);
+
 // Obtenga la lista de citas de los usuarios.
 router.get('/ObtenerLista', Cita.findAll);
 

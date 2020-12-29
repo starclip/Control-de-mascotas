@@ -8,6 +8,7 @@ function definirEventos(){
 
         // Decide si trae la información de la base de datos dependiendo de la acción realizada por el usuario.
         configurarModal(id);
+        limpiarDatosCliente();
 
         // Traer la información de la base de datos.
         if (id == "Editar"){
@@ -38,13 +39,18 @@ function definirEventos(){
     $("#Guardar").on('click', function(e) {
         $("#formularioCitas").trigger("submit");
     });
+
+    $("#botoncedula").on('click', function(evento){
+        var cedula = $("input[name='Cedula']").val();
+
+        buscarPersona(cedula);
+    });
 }
 
 // Función que obtiene los datos específicos de un registro.
 function obtenerCitaEspecifica(){
     var elementoSeleccionado = $(".card.active");
     var idCita = $(elementoSeleccionado).find("#idCita").val();
-    debugger;
     var url = "/Citas/Obtener";
     $.ajax({  
         url: url,  
@@ -54,10 +60,50 @@ function obtenerCitaEspecifica(){
         contentType: "application/x-www-form-urlencoded",
         success: function(data, status){  
             // Cargar los datos específicos del registro.
-            debugger;
+            recargarDatosCliente(data);
         },
         error: imprimirError
     });  
+}
+
+// Función que recarga los datos del cliente seleccionados.
+function recargarDatosCliente(datos){
+
+    var fecha = new Date(datos.fecha);
+    var dia = fecha.getDay() > 9 ? fecha.getDay() : "0" + fecha.getDay();
+    var mes = fecha.getMonth() > 9 ? fecha.getMonth() : "0" + fecha.getMonth();
+    var fechaFormato = fecha.getFullYear() + "-" + mes + "-" + dia;
+
+    var horas = fecha.getHours();
+    var minutos = fecha.getMinutes();
+    var segundos = fecha.getSeconds();
+    var tiempoFormato = horas + ":" + minutos + ":" + segundos;
+
+    $("input[name='IdCita'").val(datos.idCita);
+    $("input[name='IdMascota'").val(datos.idMascota);
+    $("input[name='IdCliente'").val(datos.idCliente);
+    $("input[name='IdVeterinario'").val(datos.idVeterinario);
+    $("input[name='Cedula']").val(datos.cedula);
+    $("input[name='Propietario']").val(datos.propietario);
+    $("button[name='Mascota']").text(datos.nombreMascota);
+    $("input[name='Telefono']").val(datos.telefono);
+    $("input[name='Hora']").val(tiempoFormato);
+    $("input[name='Fecha']").val(fechaFormato);
+}
+
+// Función que recarga el modal en caso de que se vaya a agregar alguien nuevo.
+function limpiarDatosCliente(){
+
+    $("input[name='IdCita'").val(-1);
+    $("input[name='IdMascota'").val(-1);
+    $("input[name='IdCliente'").val(-1);
+    $("input[name='IdVeterinario'").val(-1);
+    $("input[name='Cedula']").val("");
+    $("input[name='Propietario']").val("");
+    $("button[name='Mascota']").val("");
+    $("input[name='Telefono']").val("");
+    $("input[name='Hora']").val("");
+    $("input[name='Fecha']").val("");
 }
 
 // Función que va a base de datos trae las citas del día de hoy y crea el html cargandolo en la página.
@@ -76,6 +122,84 @@ function obtenerCitasBaseDatos(){
         },
         error: imprimirError
     });  
+}
+
+// Función para buscar la información de una persona.
+function buscarPersona(cedula){
+    if (cedula == undefined || cedula == "" || cedula == null){
+        alert("Debe ingresar una cédula");
+        return;
+    }
+
+    var url = "/Citas/ObtenerDatosCedula";
+    $.ajax({  
+        url: url,  
+        type:'POST', 
+        dataType: "json",
+        data: { "Cedula": cedula },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(data, status){  
+            cargarDatosCedula(data);
+            habilitarDatosCedula();
+        },
+        error: imprimirError
+    });  
+}
+
+// Cargar página con datos de la cédula.
+function cargarDatosCedula(datos){
+    var listaNombreMascotas = datos.NombreMascotas ? datos.NombreMascotas.split(',') : [];
+    var listaIdMascotas = datos.IdMascotas ? datos.IdMascotas.split(',') : [];
+    var nombre, id;
+
+    /* Se crea el html del drop down de bootstrap */
+    if (listaNombreMascotas.length == 0)
+        $("#botonListaMascotas").text("");
+    else
+        $("#botonListaMascotas").text(listaNombreMascotas[0]);
+
+    if (listaNombreMascotas.length > 1)
+        $("#botonListaMascotas").addClass("dropdown-toggle");
+    
+    /* Vacío la lista de mascotas. */
+    $(".dropdown").find(".dropdown-item").remove();
+
+    /* Agrego los elementos a la lista. */
+    for(var i = 0; i < listaIdMascotas.length; i++){
+        nombre = listaNombreMascotas[i];
+        id = listaIdMascotas[i];
+
+        var mascota = $("<button>", {
+            class: "dropdown-item", 
+            type: "button",
+            id: "opcionMascota_" + id,
+            value: id
+        });
+
+        mascota.text(nombre);
+
+        mascota.on('click', function(e){
+            var nombre = $(this).text();
+            var id = $(this).attr('id');
+            $("#botonListaMascotas").text(nombre);
+            $("input[name='IdMascota']").val(id);
+        });
+
+        // Agreguelo a la lista de mascotas disponibles.
+        $("#listaMascotas").append(mascota);
+    }
+
+    $("input[name='Propietario']").val(datos.Propietario);
+    $("input[name='Telefono']").val(datos.Telefono);
+    $("input[name='IdCliente']").val(datos.IdCliente);
+}
+
+// Función que habilita los campos una vez ingresada la cedula.
+function habilitarDatosCedula(){
+    $("button[name='Mascota']").removeAttr('disabled', 'disabled');
+    $("input[name='Telefono']").removeAttr('disabled', 'disabled');
+    $("input[name='Hora']").removeAttr('disabled', 'disabled');
+    $("input[name='Fecha']").removeAttr('disabled', 'disabled');
 }
 
 // Obtener el formato de la fecha.
@@ -257,19 +381,23 @@ function configurarModal(evento){
 
     if (evento == 'Agregar')
     {
+        $("#exampleModalLabel").text("Agregar nueva cita");
         $("input[name='Cedula']").removeAttr('disabled', 'disabled');
         $("input[name='Propietario']").attr('disabled', 'disabled');
-        $("input[name='Mascota']").attr('disabled', 'disabled');
+        $("button[name='Mascota']").attr('disabled', 'disabled');
         $("input[name='Telefono']").attr('disabled', 'disabled');
         $("input[name='Hora']").attr('disabled', 'disabled');
         $("input[name='Fecha']").attr('disabled', 'disabled');
+        $("#botoncedula").removeAttr('disabled', 'disabled');
     }else{
+        $("#exampleModalLabel").text("Editar una cita");
         $("input[name='Cedula']").attr('disabled', 'disabled');
         $("input[name='Propietario']").attr('disabled', 'disabled');
-        $("input[name='Mascota']").attr('disabled', 'disabled');
+        $("button[name='Mascota']").attr('disabled', 'disabled');
         $("input[name='Telefono']").removeAttr('disabled', 'disabled');
         $("input[name='Hora']").removeAttr('disabled', 'disabled');
         $("input[name='Fecha']").removeAttr('disabled', 'disabled');
+        $("#botoncedula").attr('disabled', 'disabled');
     }
 }
 
