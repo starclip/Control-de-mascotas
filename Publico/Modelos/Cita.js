@@ -15,16 +15,56 @@ const Cita = function (cita){
     this.fecha = cita.Fecha;
     this.idVeterinario = cita.IdVeterinario;
     this.veterinario = cita.Veterinario;
+    this.idAdministrador = cita.IdAdministrador;
 }
 
 // Cuando se cree una nueva cita.
 Cita.create = (nuevaCita, result) => {
 
-    connection.query("call insertarCita(?,?)", [nuevaCita, nuevaCita], function (err, result) {
+    connection.query("call insertarCita(?,?,?,?,?)", 
+        [
+            nuevaCita.idMascota, 
+            nuevaCita.idAdministrador, 
+            nuevaCita.idVeterinario,
+            nuevaCita.telefono,
+            new Date(nuevaCita.fecha + " " + nuevaCita.hora)
+        ], function (err, res) {
         if (err) {
-            console.log("err:", err);
+            console.log("Error:", err);
         } else {
-            console.log("results:", result);
+            if (res.affectedRows > 0){
+                console.log("Se insertó exitosamente");
+                result(null, true);
+            }else{
+                console.log("No se insertó ningún registro");
+                result(null, false);
+            }
+        }
+    });
+}
+
+// Cuando se actualiza la cita.
+Cita.update = (cita, result) => {
+
+    connection.query("call actualizarCita(?,?,?,?,?,?)", 
+    [
+        cita.idCita,
+        cita.idMascota, 
+        cita.idAdministrador, 
+        cita.idVeterinario,
+        cita.telefono,
+        new Date(cita.fecha + " " + cita.hora)
+    ], function (err, res) {
+        if (err) {
+            console.log("Error:", err);
+        } else {
+            if (res.affectedRows > 0){
+                console.log("Se actualizó exitosamente");
+                result(null, true);
+            }else{
+                console.log("No se actualizó ningún registro");
+                result(null, false);
+            }
         }
     });
 }

@@ -18,26 +18,17 @@ function definirEventos(){
 
     $("#formularioCitas").on("submit", function(e){
         e.preventDefault(); // avoid to execute the actual submit of the form.
-
+        
         var datos = $(this).serialize();
-        var url = "/Citas/Guardar";
-
-        $.ajax({  
-            url: url,  
-            type:'POST', 
-            dataType: "json",
-            data: datos,
-            contentType: "application/x-www-form-urlencoded",
-            success: function(data, status){  
-                console.log('message', data.message);
-            },
-            error: imprimirError
-        });  
+        guardarDatos(datos);
     });
 
     // Evento que se ejecuta cuando la persona presiona guardar en el modal.
     $("#Guardar").on('click', function(e) {
-        $("#formularioCitas").trigger("submit");
+        $("input[name='IdVeterinario']").val(1);
+        var validados = validarCampos();
+        if (validados)
+            $("#formularioCitas").trigger("submit");
     });
 
     $("#botoncedula").on('click', function(evento){
@@ -45,6 +36,77 @@ function definirEventos(){
 
         buscarPersona(cedula);
     });
+}
+
+// Función para enviar los datos a la hora de guardar.
+function guardarDatos(datos){
+
+    var idCita = $("input[name='IdCita']").val();
+    var url = "/Citas/Editar";
+    
+    if (idCita == -1)
+        url = "/Citas/Crear";
+
+    $.ajax({  
+        url: url,  
+        type:'POST', 
+        dataType: "json",
+        data: datos,
+        contentType: "application/x-www-form-urlencoded",
+        success: function(estado, status){  
+
+            if (estado == true)
+                mostrarMensaje("Se guardó exitosamente.");
+            else
+                mostrarMensaje("Fracasé rotundamente.");
+
+            $('#ModalAgregarCita').modal('toggle');
+            obtenerCitasBaseDatos();
+        },
+        error: imprimirError
+    });  
+}
+
+// Función que valida que los campos tengan los datos correctos.
+function validarCampos(){
+    var cedula = $("input[name='Cedula']").val();
+    var cliente = $("input[name='IdCliente']").val();
+    var mascota = $("input[name='IdMascota'").val();
+    var telefono = $("input[name='Telefono'").val();
+    var hora = $("input[name='Hora'").val();
+    var fecha = $("input[name='Fecha'").val();
+
+    if (cedula == "" || cedula == undefined || cedula == null){
+        mostrarMensaje("No se ha ingresado una cédula para procesar la solicitud");
+        return false;
+    }
+    if (cliente == -1){
+        mostrarMensaje("No se ha ingresado a ningún cliente para procesar la solicitud de la cita.");
+        return false;
+    }
+    if (mascota == -1){
+        mostrarMensaje("No se ha ingresado ninguna mascota para procesar la solicitud de la cita");
+        return false;
+    }
+    if (telefono == "" || telefono == undefined || telefono == null){
+        mostrarMensaje("No se ha ingresado ningún telefono para procesar la solicitud de la cita");
+        return false;
+    }
+    if (hora == "" || hora == undefined || hora == null){
+        mostrarMensaje("No se ha ingresado ninguna hora para procesar la solicitud de la cita");
+        return false;
+    }
+    if (fecha == "" || fecha == undefined || fecha == null){
+        mostrarMensaje("No se ha ingresado ninguna fecha para procesar la solicitud de la cita");
+        return false;
+    }
+
+    return true;
+}
+
+// Función que muestra un mensaje de que no se han insertado los datos.
+function mostrarMensaje(mensaje){
+    alert(mensaje);
 }
 
 // Función que obtiene los datos específicos de un registro.
@@ -79,10 +141,10 @@ function recargarDatosCliente(datos){
     var segundos = fecha.getSeconds();
     var tiempoFormato = horas + ":" + minutos + ":" + segundos;
 
-    $("input[name='IdCita'").val(datos.idCita);
-    $("input[name='IdMascota'").val(datos.idMascota);
-    $("input[name='IdCliente'").val(datos.idCliente);
-    $("input[name='IdVeterinario'").val(datos.idVeterinario);
+    $("input[name='IdCita']").val(datos.idCita);
+    $("input[name='IdMascota']").val(datos.idMascota);
+    $("input[name='IdCliente']").val(datos.idCliente);
+    $("input[name='IdVeterinario']").val(datos.idVeterinario);
     $("input[name='Cedula']").val(datos.cedula);
     $("input[name='Propietario']").val(datos.propietario);
     $("button[name='Mascota']").text(datos.nombreMascota);
@@ -94,13 +156,14 @@ function recargarDatosCliente(datos){
 // Función que recarga el modal en caso de que se vaya a agregar alguien nuevo.
 function limpiarDatosCliente(){
 
-    $("input[name='IdCita'").val(-1);
-    $("input[name='IdMascota'").val(-1);
-    $("input[name='IdCliente'").val(-1);
-    $("input[name='IdVeterinario'").val(-1);
+    $("input[name='IdCita']").val(-1);
+    $("input[name='IdMascota']").val(-1);
+    $("input[name='IdCliente']").val(-1);
+    $("input[name='IdVeterinario']").val(-1);
     $("input[name='Cedula']").val("");
     $("input[name='Propietario']").val("");
     $("button[name='Mascota']").val("");
+    $("button[name='Mascota']").text("No se ha seleccionado");
     $("input[name='Telefono']").val("");
     $("input[name='Hora']").val("");
     $("input[name='Fecha']").val("");
@@ -155,8 +218,10 @@ function cargarDatosCedula(datos){
     /* Se crea el html del drop down de bootstrap */
     if (listaNombreMascotas.length == 0)
         $("#botonListaMascotas").text("");
-    else
+    else{
         $("#botonListaMascotas").text(listaNombreMascotas[0]);
+        $("input[name='IdMascota']").val(listaIdMascotas[0]);
+    }
 
     if (listaNombreMascotas.length > 1)
         $("#botonListaMascotas").addClass("dropdown-toggle");
@@ -180,7 +245,7 @@ function cargarDatosCedula(datos){
 
         mascota.on('click', function(e){
             var nombre = $(this).text();
-            var id = $(this).attr('id');
+            var id = $(this).val();
             $("#botonListaMascotas").text(nombre);
             $("input[name='IdMascota']").val(id);
         });
@@ -227,6 +292,7 @@ function obtenerFormatoFecha (fecha){
 function pintarCitas(listaCitas){
 
     var datosPintar;
+    $("#columnaContenedoraCitas").find(".row").remove();
 
     for(var i = 0; i < listaCitas.length; i++){
         datosPintar = listaCitas[i];

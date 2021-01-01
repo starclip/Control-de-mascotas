@@ -78,3 +78,39 @@ INNER JOIN (
     ON M.IdCliente = C.IdCliente
 WHERE P.cedula = cedula$$
 DELIMITER ;
+
+/* Se crea el procedimiento para insertar una cita al sistema. */
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarCita`(
+    IN `IdMascota` INT,
+    IN `IdAdministrador` INT,
+    IN `IdVeterinario` INT,
+    IN `Telefono` VARCHAR(10),
+    IN `Fecha` DATETIME)
+    NO SQL
+INSERT cita (IdMascota, IdAdministrador, IdVeterinario, Telefono, Fecha, Estado)
+VALUES (IdMascota, IdAdministrador, IdVeterinario, Telefono, Fecha, 'P')
+
+$$
+DELIMITER ;
+
+/* Se crea el procedimiento para actualizar la cita del sistema. */
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizarCita`(
+    IN `IdCita` INT,
+    IN `IdMascota` INT,
+    IN `IdAdministrador` INT,
+    IN `IdVeterinario` INT,
+    IN `Telefono` VARCHAR(10),
+    IN `Fecha` DATETIME)
+    NO SQL
+UPDATE cita C
+SET 
+    C.IdMascota = IdMascota, 
+    C.IdAdministrador = IdAdministrador, 
+    C.IdVeterinario = IdVeterinario, 
+    C.Telefono = Telefono, 
+    C.Fecha = Fecha
+WHERE C.IdCita = IdCita;
+$$
+DELIMITER ;
