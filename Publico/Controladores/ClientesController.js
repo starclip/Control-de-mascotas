@@ -1,3 +1,4 @@
+const Cita = require('../Modelos/Cita.js');
 const Cliente = require('../Modelos/Cliente.js');
 
 // Crea un nueva cliente en el registro
@@ -51,8 +52,33 @@ exports.update = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
+    // Valida si el usuario ingreso parámetros.
+    if (!req.body){
+        res.status(400).send({
+            message: "El contenido se encuentra vacio"
+        });
+    }
+    // Valida si el usuario ingreso el id del cliente.
+    if (!req.body.IdCliente){
+        res.status(400).send({
+            message: "No envío ningún id de cliente"
+        });
+    }
 
+    const idCliente = req.body.IdCliente;
+    Cliente.getOne(idCliente, (err,resultado)=>{
+        if(err)
+            res.status(500).send({
+                message:
+                err.message || "No se encontraron datos referentes con respecto a ese cliente."
+            });
+        else{
+            const clienteSeleccionada = new Cliente(resultado);
+            res.send(clienteSeleccionada)
+        }       
+    });
 };
+
 
 exports.delete = (req, res) => {
 

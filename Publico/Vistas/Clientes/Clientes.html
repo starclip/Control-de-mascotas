@@ -5,7 +5,8 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
             <link rel="stylesheet" href="../Estilos/General.css" />
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>       
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>  
+            <script src="https://kit.fontawesome.com/f8ca65ef4d.js" crossorigin="anonymous"></script>     
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
             <title>Clientes</title>
 </head>
@@ -22,6 +23,7 @@
             
             </div>
             <div class="col-sm-4">
+                
                 <div class="row justify-content-center" id="infoBarUsuario">
                     <a href="https://www.facebook.com/veterinariadoctorbrenes/" target="_blank" class="facebook">
                         <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
@@ -37,7 +39,9 @@
                     </a>
                 </div>
             </div>
-      </div>
+    </div>
+
+
 
     <div class="container">
         <nav class="navbar collapse navbar-collapse navbar-light">
@@ -58,9 +62,9 @@
     </div>
     <div id="botones" class="row">
         <div class="col-md-3">
-            <button id="Agregar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCliente">Agregar</button> 
-            <button id="Editar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCliente">Editar</button> 
-            <button id="Eliminar" type="button" class="btn btn-success" data-toggle="modal" data-target="#">Eliminar</button> 
+            <button id="Agregar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCliente" >Agregar</button> 
+            <button id="Editar" type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalAgregarCliente" disabled="disabled">Editar</button> 
+            <button id="Eliminar" type="button" class="btn btn-success" data-toggle="modal" data-target="#" disabled="disabled">Eliminar</button> 
         </div>
     </div>
     <hr class="divisorLinea">
@@ -103,22 +107,22 @@
                         <div class="row">
                             <div class="col" style="height: 86px;">
                               <label>Nombre:</label>
-                              <input type="text" name="Propietario" class="form-control" placeholder="Julio">
+                              <input type="text" name="Propietario" class="form-control">
                             </div>
                             <div class="col">
                                 <label>Apellidos:</label>
-                                <input type="text" name="Apellidos" class="form-control" placeholder="Castillo">
+                                <input type="text" name="Apellidos" class="form-control">
                             </div>
                           </div>
                     </div>
                     <div class="row">
                         <div class="col" style="height: 86px;">
                             <label>Cédula:</label>
-                            <input type="text" name="Cedula" class="form-control" placeholder="115780875">
+                            <input type="text" name="Cedula" class="form-control" >
                         </div>
                         <div class="col">
                             <label>Telefono:</label>
-                            <input type="text" name="Telefono" class="form-control" placeholder="22221111">
+                            <input type="text" name="Telefono" class="form-control" >
                         </div>
                     </div>
                     <div class="row">
@@ -129,6 +133,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="IdCliente" />
                 </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>

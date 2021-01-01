@@ -24,3 +24,22 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerClientes`()
     ON M.IdCliente = C.IdCliente
 
 DELIMITER ;
+
+
+/* Se crea el procedimiento para obtener un cliente específico. */
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerClienteEspecifico`(IN `IdCliente` INT)
+    NO SQL
+SELECT
+C.IdCliente,
+P.Cedula,
+P.Nombre,
+P.Apellido,
+P.Correo, 
+P.Telefono, 
+P.Direccion
+FROM cliente C
+Inner join persona P 
+ON C.IdPersona = P.IdPersona 
+WHERE IdCliente$$
+DELIMITER ;

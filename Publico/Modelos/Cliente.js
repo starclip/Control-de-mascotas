@@ -7,11 +7,10 @@ const Cliente = function (Cliente){
     this.idCliente = Cliente.IdCliente;
     this.cedula = Cliente.Cedula;
     this.nombre = Cliente.Nombre;
-    this.apellido = Cliente.apellido;
-    this.correo = Cliente.correo;
+    this.apellido = Cliente.Apellido;
+    this.correo = Cliente.Correo;
     this.telefono = Cliente.Telefono;
     this.direccion = Cliente.Direccion;
-    this.mascota = Cliente.Mascota;
 }
 
 // Cuando se cree un nuevo registro.
@@ -38,4 +37,18 @@ Cliente.getAll = result => {
         }
     });
 }
+
+// Obtenga los datos específicos de un cliente.
+Cliente.getOne = (idCliente, result) => {
+
+    connection.query("call obtenerClienteEspecifico(?)", [idCliente], function (err, res) {
+        if (err) {
+            console.log("err:", err);
+        } else {
+            result(null, res[0][0]);
+        }
+    });
+
+}
+
 module.exports = Cliente;

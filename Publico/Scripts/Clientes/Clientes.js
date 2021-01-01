@@ -6,11 +6,12 @@ function definirEventos(){
     $('#ModalAgregarCliente').on('show.bs.modal', function(e) {
         var reference_tag = $(e.relatedTarget); 
         var id = reference_tag.attr("id");
-        debugger;
+        
 
         // Decide si trae la información de la base de datos dependiendo de la acción realizada por el usuario.
        
         configurarModal(id);
+        limpiarDatosCliente();
 
        // Traer la información de la base de datos.
        if (id == "Editar"){
@@ -47,28 +48,34 @@ function obtenerClienteEspecifico()
 {
     var elementoSeleccionado = $("tr.active");
     var idCliente = $(elementoSeleccionado).find("#idCliente").attr("value");
-    debugger;
-    /*
-    var url = "/Citas/Obtener";
+    
+     // se llama al routers en clientes
+
+    var url = "/Clientes/Obtener";
     $.ajax({  
         url: url,  
         type:'POST', 
         dataType: "json",
-        data: { "IdCita": idCita },
+        data: { "IdCliente": idCliente },
         contentType: "application/x-www-form-urlencoded",
         success: function(data, status){  
             // Cargar los datos específicos del registro.
-            debugger;
+            recargarDatosCliente(data)
         },
         error: imprimirError
     });  
-    */
+    
 }
 
-
-
-
-
+function recargarDatosCliente(datos){
+    
+    $("input[name='IdCliente']").val(datos.idCliente);
+    $("input[name='Propietario']").val(datos.nombre);
+    $("input[name='Apellidos']").val(datos.apellido);
+    $("input[name='Cedula']").val(datos.cedula);
+    $("input[name='Telefono']").val(datos.telefono);
+    $("textarea[name='Direccion']").val(datos.direccion);
+}
 
 
 // Función que va a base de datos trae los cliente regristrados y crea el html cargandolo en la página.
@@ -90,7 +97,6 @@ function obtenerClientesBaseDatos(){
 
 // Función que imprime el error en caso de ser un error de ajax.
 function imprimirError(xhr){
-    debugger;
     try {
         var response = JSON.parse(xhr.responseText);
         console.log('Exitoso.');
@@ -132,18 +138,33 @@ function seleccionar(evento){
     }
     if (!esIgual) {
         $(this).addClass("active");
+        $("#Editar").removeAttr('disabled', 'disabled');
+        $("#Eliminar").removeAttr('disabled', 'disabled');
     }
     else{
         $(this).removeClass("active");
+        $("#Editar").attr('disabled', 'disabled');
+        $("#Eliminar").attr('disabled', 'disabled');
     }
 }
+
+// Función que recarga el modal en caso de que se vaya a agregar alguien nuevo.
+function limpiarDatosCliente()
+    {
+        $("input[name='IdCliente']").val(-1);
+        $("input[name='Propietario']").val("");
+        $("input[name= 'Apellidos']").val("");
+        $("input[name='Cedula']").val("");
+        $("input[name= 'Telefono']").val("");
+        $("textarea[name= 'Direccion']").val("");
+    }
+
 
 // Función que va a crear un objeto de Jquery con el código html. Usamos los campos del
 // del procedimiento ObtenerClientes()
 function pintarClientes(listaClientes){
 
     var datosPintar;
-
 
     for(var i = 0; i < listaClientes.length; i++){
         datosPintar = listaClientes[i];

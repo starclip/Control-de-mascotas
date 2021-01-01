@@ -9,6 +9,9 @@ router.post('/Eliminar', function (req, res) {
     // Llamo a la base de datos.
 });
 
+// Obtiene el cliente específico de la base de datos.
+router.post('/Obtener', Clientes.findOne);
+
 // Obtenga la lista de clientes registrados
 router.get('/ObtenerLista', Clientes.findAll);
 
