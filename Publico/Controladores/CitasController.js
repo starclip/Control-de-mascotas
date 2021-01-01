@@ -12,21 +12,21 @@ exports.create = (req, res) => {
 
     // Crea la nueva cita.
     const nuevaCita = new Cita({
-        nombreMascota: req.body.NombreMascota,
-        cedula: req.body.Cedula,
-        propietario: req.body.Propietario,
-        apellido: req.body.Apellido,
-        hora: req.body.Hora,
-        fecha: req.body.Fecha
+        IdCliente: req.body.IdCliente,
+        IdMascota: req.body.IdMascota,
+        IdVeterinario: req.body.IdVeterinario,
+        IdAdministrador: req.body.IdAdministrador,
+        Telefono: req.body.Telefono,
+        Hora: req.body.Hora,
+        Fecha: req.body.Fecha
     });
-
 
     // Guarda la cita en la base de datos.
     Cita.create(nuevaCita, (err, data) => {
         if (err)
         res.status(500).send({
             message:
-            err.message || "Some error occurred while creating the Customer."
+            err.message || "No se pudo crear la cita correctamente."
         });
         else res.send(data);
     });
@@ -45,7 +45,34 @@ exports.findAll = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    
+    // Valida si el usuario ingreso parámetros.
+    if (!req.body) {
+        res.status(400).send({
+        message: "El contenido está vacío."
+        });
+    }
+
+    // Crea la nueva cita.
+    const cita = new Cita({
+        IdCita: req.body.IdCita,
+        IdCliente: req.body.IdCliente,
+        IdMascota: req.body.IdMascota,
+        IdVeterinario: req.body.IdVeterinario,
+        IdAdministrador: req.body.IdAdministrador,
+        Telefono: req.body.Telefono,
+        Hora: req.body.Hora,
+        Fecha: req.body.Fecha
+    });
+
+    // Guarda la cita en la base de datos.
+    Cita.update(cita, (err, data) => {
+        if (err)
+        res.status(500).send({
+            message:
+            err.message || "No se pudo actualizar la consulta."
+        });
+        else res.send(data);
+    });
 };
 
 exports.findOne = (req, res) => {
