@@ -94,6 +94,24 @@ Cita.getOne = (idCita, result) => {
     });
 }
 
+// Elimine el registro de la cita específica.
+Cita.delete = (idCita, result) => {
+
+    connection.query("call eliminarCita(?)", [idCita], function (err, res) {
+        if (err) {
+            console.log("err:", err);
+        } else {
+            if (res.affectedRows > 0){
+                console.log("Se eliminó el registro exitosamente");
+                result(null, true);
+            }else{
+                console.log("No se eliminó ningún registro");
+                result(null, false);
+            }
+        }
+    });
+}
+
 // Obtenga los datos de una persona dada una cédula.
 Cita.getDataId = (cedula, result) => {
     connection.query("call obtenerDatosCedula(?)", [cedula], function (err, res) {

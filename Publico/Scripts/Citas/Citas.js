@@ -31,9 +31,10 @@ function definirEventos(){
             $("#formularioCitas").trigger("submit");
     });
 
-    $("#botoncedula").on('click', function(evento){
-        var cedula = $("input[name='Cedula']").val();
+    $("#Eliminar").on('click', eliminarCitaEspecifica);
 
+    $("#botoncedula").on('click', function(evento){
+        var cedula = $("input[name='Cedula']").val().replaceAll('-', '');
         buscarPersona(cedula);
     });
 }
@@ -109,6 +110,31 @@ function mostrarMensaje(mensaje){
     alert(mensaje);
 }
 
+function eliminarCitaEspecifica(){
+    var elementoSeleccionado = $(".card.active");
+    var idCita = $(elementoSeleccionado).find("#idCita").val();
+    var url = "/Citas/Eliminar";
+
+    $.ajax({  
+        url: url,  
+        type:'POST', 
+        dataType: "json",
+        data: { "IdCita": idCita },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(data, status){  
+            // Cargar los datos específicos del registro.
+            if (data == true){
+                alert("El registro se eliminó correctamente");
+                obtenerCitasBaseDatos();
+            }
+            else{
+                alert("El registro no pudo eliminarse del sistema");
+            }
+        },
+        error: imprimirError
+    }); 
+}
+
 // Función que obtiene los datos específicos de un registro.
 function obtenerCitaEspecifica(){
     var elementoSeleccionado = $(".card.active");
@@ -132,13 +158,11 @@ function obtenerCitaEspecifica(){
 function recargarDatosCliente(datos){
 
     var fecha = new Date(datos.fecha);
-    var dia = fecha.getDay() > 9 ? fecha.getDay() : "0" + fecha.getDay();
-    var mes = fecha.getMonth() > 9 ? fecha.getMonth() : "0" + fecha.getMonth();
-    var fechaFormato = fecha.getFullYear() + "-" + mes + "-" + dia;
+    var fechaFormato = fecha.toISOString().substr(0, 10);
 
     var horas = fecha.getHours();
-    var minutos = fecha.getMinutes();
-    var segundos = fecha.getSeconds();
+    var minutos = fecha.getMinutes() < 10 ? '0' + fecha.getMinutes() : fecha.getMinutes();
+    var segundos = fecha.getSeconds() < 10 ? '0' + fecha.getSeconds() : fecha.getSeconds();
     var tiempoFormato = horas + ":" + minutos + ":" + segundos;
 
     $("input[name='IdCita']").val(datos.idCita);
@@ -193,6 +217,7 @@ function buscarPersona(cedula){
         alert("Debe ingresar una cédula");
         return;
     }
+    
 
     var url = "/Citas/ObtenerDatosCedula";
     $.ajax({  
@@ -529,6 +554,7 @@ function salirCard(evento){
 }
 
 $( document ).ready(function() {
+    $("input").inputmask();
     definirEventos();
     obtenerCitasBaseDatos();
 });

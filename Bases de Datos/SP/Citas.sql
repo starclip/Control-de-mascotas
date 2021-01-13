@@ -26,6 +26,8 @@ SELECT
     	ON V.IdVeterinario = C.IdVeterinario
     INNER JOIN persona PV
     	ON PV.IdPersona = V.IdPersona$$
+    WHERE DATE(C.Fecha) = CURDATE()
+    ORDER BY C.Fecha
 DELIMITER ;
 
 /* Se crea el procedimiento para obtener una cita específica. */
@@ -112,5 +114,15 @@ SET
     C.Telefono = Telefono, 
     C.Fecha = Fecha
 WHERE C.IdCita = IdCita;
+$$
+DELIMITER ;
+
+/* Se crea el procedimiento para eliminar una cita al sistema. */
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarCita`(
+    IN `IdCita` INT)
+    NO SQL
+DELETE FROM cita WHERE cita.IdCita = IdCita
+
 $$
 DELIMITER ;

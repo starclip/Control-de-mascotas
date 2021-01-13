@@ -9,6 +9,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/f8ca65ef4d.js" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="Bibliotecas/dist/jquery.inputmask.js"></script>
         <title>Programación de Citas</title>
     </head>
     <!-- Va el contenido o el valor que vaya a tener las páginas. -->
@@ -89,7 +90,7 @@
                               <div class="col">
                                 <label>Cédula:</label>
                                 <div class="input-group mb-3">
-                                  <input type="text" name="Cedula" class="form-control" placeholder="X-XXXX-XXXX" aria-label="Cédula"  aria-describedby="Digito de nueve dígitos">
+                                  <input type="text" name="Cedula" class="form-control" placeholder="X-XXXX-XXXX" aria-label="Cédula"  aria-describedby="Digito de nueve dígitos" data-inputmask="'mask': '9-9999-9999'">
                                   <div class="input-group-append">
                                     <button id="botoncedula" type="button" class="btn btn-labeled btn-info">
                                       <span class="btn-label"><i class="fas fa-search"></i></span></button>
@@ -112,7 +113,7 @@
                               </div>
                               <div class="col">
                                   <label>Teléfono:</label>
-                                <input type="text" name="Telefono" class="form-control" placeholder="XXXX-XXXX">
+                                <input type="text" name="Telefono" class="form-control" placeholder="" data-inputmask="'mask': '9999-9999'">
                               </div>
                             </div>
   

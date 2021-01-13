@@ -133,5 +133,29 @@ exports.findId = (req, res) => {
 };
 
 exports.delete = (req, res) => {
+    // Valida si el usuario ingreso parámetros para eliminar.
+    if (!req.body) {
+        res.status(400).send({
+        message: "El contenido está vacío."
+        });
+    }
 
+    // Valida si el usuario ingreso el id de la cita.
+    if (!req.body.IdCita){
+        res.status(400).send({
+            message: "No ha seleccionado ningún registro para eliminar."
+        });
+    }
+
+    const idCita = req.body.IdCita;
+
+    // Guarda la cita en la base de datos.
+    Cita.delete(idCita, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                err.message || "No se pudo eliminar la cita correctamente."
+            });
+        else res.send(data);
+    });
 };
