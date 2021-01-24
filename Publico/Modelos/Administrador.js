@@ -18,12 +18,12 @@ Administrador.iniciarSesion = (datos, result) => {
     ], 
     function(err, res){
         if (err) {
-            result(err, { estado: false, mensaje: "No funcionó correctamente" });
+            result(err, { estado: false, tipo: "3", mensaje: "No funcionó correctamente" });
         } else {
             if (res[0].length > 0){
                 result(null, res[0][0]);
             }else{
-                result(null, { estado: false });
+                result(null, { estado: false, tipo: "3", mensaje: "No se encontraron resultados" });
             }
         }
     })

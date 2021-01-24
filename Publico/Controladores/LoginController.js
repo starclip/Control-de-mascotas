@@ -1,5 +1,13 @@
 const Administrador = require('../Modelos/Administrador.js');
 
+// Comprueba que el administrador haya o no, iniciado la sesión.
+exports.obtenerSesion = (req, res) => {
+    if (req.session && req.session.admin)
+        res.send({ "estado" : true, "nombre": req.session.nombre + ' ' + req.session.apellido });
+    else
+        res.send({ "estado" : false });
+}
+
 // Comprueba que el administrador tenga el usuario y la contraseña.
 exports.iniciarSesion = (req, res) => {
 
@@ -7,6 +15,7 @@ exports.iniciarSesion = (req, res) => {
     if (!req.body) {
         res.status(400).send({
             estado: false,
+            tipo: "3",
             mensaje: "El contenido está vacío."
         });
     }
@@ -15,6 +24,7 @@ exports.iniciarSesion = (req, res) => {
     if (!req.body.Usuario || !req.body.Contrasena) {
         res.send({
             estado: false,
+            tipo: "3",
             mensaje: "Debe ingresar un usuario y una contraseña"
         });
     }
@@ -41,12 +51,15 @@ exports.iniciarSesion = (req, res) => {
             req.session.admin = true;
 
             res.send({
+                nombre: administrador.nombre + ' ' + administrador.apellido,
                 estado: true,
+                tipo: "4",
                 mensaje: "Se inició sesión exitosamente"
             });
         }else{
             res.send({
                 estado: false,
+                tipo: "3",
                 mensaje: "La contraseña y el usuario no existen en la aplicación."
             });
         }
@@ -62,6 +75,7 @@ exports.cerrarSesion = (req, res) => {
     req.session.admin = null;
 
     res.send({
+        tipo: "4",
         estado: true,
         mensaje: "Se cerró la sesión"
     });

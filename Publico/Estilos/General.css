@@ -53,6 +53,10 @@
     background-color: gray !important;
 }
 
+/* 
+    Estilos de los botones.
+*/
+
 #botonListaMascotas{
     text-align: left;
     border: 1px solid #ced4da;
@@ -70,4 +74,89 @@
 
 tr.active{
     background-color: #0881AD !important;
+}
+
+.closeModal {
+    padding: 0px !important;
+}
+
+.tituloErrorHeader {
+    display: block;
+    background: #e85e6c;
+    border-bottom: none;
+    position: relative;
+    text-align: center;
+    margin-right: -0.5px;
+    border-radius: 5px 5px 0 0;
+    padding: 35px;
+}
+
+.tituloAdvertenciaHeader {
+    display: block;
+    background: #ffc107;
+    border-bottom: none;
+    position: relative;
+    text-align: center;
+    margin-right: -0.5px;
+    border-radius: 5px 5px 0 0;
+    padding: 35px;
+}
+
+.tituloInfoHeader {
+    display: block;
+    background: #68889E;
+    border-bottom: none;
+    position: relative;
+    text-align: center;
+    margin-right: -0.5px;
+    border-radius: 5px 5px 0 0;
+    padding: 35px;
+}
+
+.tituloExitoHeader {
+    display: block;
+    background: #008f39;
+    border-bottom: none;
+    position: relative;
+    text-align: center;
+    margin-right: -0.5px;
+    border-radius: 5px 5px 0 0;
+    padding: 35px;
+}
+
+.caja-icono {
+    color: #fff;
+    width: 95px;
+    height: 95px;
+    display: inline-block;
+    border-radius: 50%;
+    z-index: 9;
+    border: 5px solid #fff;
+    padding: 15px;
+    text-align: center;
+    margin-left: 5px;
+}
+
+.cajaHeader {
+    display: block;
+}
+
+.iconoError {
+    font-size: 58px;
+    margin: -2px 0 0 -2px;
+}
+
+.iconoAdvertencia {
+    font-size: 58px;
+    margin: -7px 0 0 -5px;
+}
+
+.iconoInformacion {
+    font-size: 58px;
+    margin: -2px 0 0 -2px;
+}
+
+.iconoExito {
+    font-size: 58px;
+    margin: -2px 0 0 -2px;
 }

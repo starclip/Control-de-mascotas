@@ -1,4 +1,93 @@
+// Función que crea los eventos de los botones de la página del login.
+function inicializarEventosLogin(){
+
+    // Se genera el evento del login.
+    var url = "/Login/ObtenerSesion";
+
+    $.ajax({  
+        url: url,  
+        type:'GET', 
+        contentType: "application/x-www-form-urlencoded",
+        success: function(datos){ 
+            var opciones = {
+                id: "",
+                class: "dropdown-item",
+                type: "button",
+                text: ""
+            };
+            
+            // Si la sesión no está iniciada, cargo el botón de iniciar sesión.
+            if (!datos.estado){
+                opciones.id = "botonIniciarSesion";
+                opciones.text = "Iniciar Sesión";
+            }else{
+                cambiarNombreAdministrador(datos.nombre);
+                opciones.id = "botonCerrarSesion";
+                opciones.text = "Cerrar Sesión";
+            }
+
+            var boton = $("<button>", opciones);
+
+            // Ejecute la función de cuando presione el botón.
+            boton.on('click', function(e){
+                if (this.id == "botonIniciarSesion")
+                    mostrarIniciarSesion();
+                else
+                    mostrarCerrarSesion();
+            });
+
+            // Agregue el botón a las opciones disponibles.
+            $('#opcionesSesion').empty();
+            $("#opcionesSesion").append(boton);
+        },
+        error: imprimirError
+    });  
+}
+
+// Función que carga la acción del login de inicio de sesión.
+function mostrarIniciarSesion(){
+    $("#loginUsuario").remove();
+
+    var modalInicioSesion = generarHTML();
+    $("body").append(modalInicioSesion);
+    $("#loginUsuario").modal('show');
+}
+
+// Función que carga la acción del login de cierre de sesión.
+function mostrarCerrarSesion(){
+    general.mostrarMensaje({
+        estado: "1",
+        mensaje: "¿Está seguro que desea cerrar la sesión?",
+        botones: [
+            {
+                "codigo": "cerrarSesion",
+                "texto": "Cerrar",
+                "funcion": function(e){
+                    general.cerrarMensaje();
+                    cerrarSesion();
+                }
+            }, 
+            {
+                "codigo": "cancelarCerrar",
+                "texto": "Cancelar"
+            }
+        ]
+    });
+}
+
+// Función que genera el html del modal de login.
 function generarHTML(){
+
+    var contenedorModal = $("<div>", {
+        id: "loginUsuario",
+        class: "modal fade text-center"
+    });
+
+    var modal = $("<div>", {
+        class: "modal-dialog",
+        id: "dialogLoginUsuario"
+    });
+
     var contenedor = $("<div>", {
         class: "modal-content"
     });
@@ -161,21 +250,44 @@ function generarHTML(){
     contenedor.append(body);
     contenedor.append(footer);
 
-    return contenedor;
+    modal.append(contenedor);
+    contenedorModal.append(modal);
+    return contenedorModal;
+}
+
+// Función para cambiar el nombre del usuario administrador en la página.
+function cambiarNombreAdministrador(nombre){
+    $("#nombreAdministrador").text("Bienvenido " + nombre);
+}
+
+// Función para limpiar el nombre del usuario administrador en la página.
+function limpiarNombreAdministrador(){
+    $("#nombreAdministrador").text("");
 }
 
 // Función que me permite iniciar sesión.
 function iniciarSesion(){
-    debugger;
     var usuario = $("#UsuarioAdministrador").val();
     var contrasena = $("#ContrasenaAdministrador").val();
 
     if (usuario == null || usuario == "" || usuario == undefined){
         // Mostrar mensaje de que debe agregar un usuario.
+        cerrarVentanaLogin();
+        general.mostrarMensaje({
+            tipo: "2",
+            mensaje: "Debe ingresar un usuario."
+        });
+        return;
     }
 
     if (contrasena == null || contrasena == "" || contrasena == undefined){
         // Mostrar mensaje de que debe agregar la contraseña.
+        cerrarVentanaLogin();
+        general.mostrarMensaje({
+            tipo: "2",
+            mensaje: "Debe ingresar una contraseña."
+        });
+        return;
     }
 
     var datos = {
@@ -194,14 +306,41 @@ function iniciarSesion(){
         success: function(datos, status){ 
             if (datos.estado){
                 // Se hacen las funciones para agregar el nombre de usuario en la pantalla de arriba.
-                //$("#loginUsuario").hide();
-                $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
-                $('.modal-backdrop').remove();//eliminamos el backdrop del modal
+                cambiarNombreAdministrador(datos.nombre);
+                inicializarEventosLogin();
+                cerrarVentanaLogin();
             } 
-            alert(datos.mensaje);
+            general.mostrarMensaje(datos);
         },
         error: imprimirError
     });  
+}
+
+// Función que me permite cerrar la sesión del usuario.
+function cerrarSesion(){
+    var url = "/Login/CerrarSesion";
+
+    $.ajax({  
+        url: url,  
+        type:'POST', 
+        dataType: "json",
+        data: {},
+        contentType: "application/x-www-form-urlencoded",
+        success: function(datos, status){ 
+            if (datos.estado){
+                limpiarNombreAdministrador(datos.nombre);
+                inicializarEventosLogin();
+            }
+
+            general.mostrarMensaje(datos);
+        },
+        error: imprimirError
+    });  
+}
+
+// Función que cierra la ventana de login.
+function cerrarVentanaLogin(){
+   $("#loginUsuario").hide();
 }
 
 // Función que imprime el error en caso de ser un error de ajax.
@@ -223,6 +362,5 @@ function imprimirError(xhr){
 }
 
 $( document ).ready(function() {
-    var htmlContent = generarHTML();
-    $("#dialogLoginUsuario").append(htmlContent);
+    inicializarEventosLogin();
 });

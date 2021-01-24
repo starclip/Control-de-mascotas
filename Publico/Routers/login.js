@@ -8,4 +8,7 @@ router.post('/IniciarSesion', Login.iniciarSesion);
 // Cierra la sesión actual del sistema.
 router.post('/CerrarSesion', Login.cerrarSesion);
 
+// Compruebe si se inicia la sesión.
+router.get('/ObtenerSesion', Login.obtenerSesion);
+
 module.exports = router;  
